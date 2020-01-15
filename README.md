@@ -14,5 +14,5 @@ One idea with C, Pascal and other similar languages will be to manager a List fo
 
 The idea with this Mem manager is to avoid the memory fragmentation that you will have in C/C++/Pascal with the Free function, at the cost to increase the Array, my idea will be that use something similar to a Linked List in PHP (i will need to research this) to have a mechanism that dont create unused data (because when whe Free an space, we lost a created Array item).
 
-Well, we will see if I can finish the Free method in this prototype :)
+Well, we will see if I can finish the Free method in this prototype :) (The idea is to move all the index above, exactly the char lenght of the index free)
 
