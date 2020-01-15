@@ -27,8 +27,16 @@ class MemoryManager{
     }
   }
 
+  function Position($index)
+  {}
+
+  function Store($index, $data)
+  {}
+
   function Free($item)
   {}
+
+
 
 }
 ?>
