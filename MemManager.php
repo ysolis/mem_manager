@@ -19,7 +19,7 @@ class MemoryManager{
       array_push($this->alloc, $size);
       $this->index++;
       $item = $this->alloc[$this->index];
-      $this->free = $this->free - $size;
+      $this->free -= $size;
       return $this->index;
     } else {
       return false;
@@ -28,11 +28,16 @@ class MemoryManager{
 
   function Position($index)
   {
-    $result = 0;
-    for($i=0; $i<$index; $i++) {
-      $result += $this->alloc[$i];
+    if($index <= $this->index)
+    {
+      $result = 0;
+      for($i=0; $i<$index; $i++) {
+        $result += $this->alloc[$i];
+      }
+      return $result;
+    } else {
+      return false;
     }
-    return $result;
   }
 
   function Store($index, $data)
@@ -51,10 +56,11 @@ class MemoryManager{
   function Free($index)
   {
     $space = $this->alloc[$index];
+    $pos   = $this->Position($index);
     $this->alloc[$index] = 0;
     for($i=$index; $i<$this->index; $i++) {
-
     }
+    $this->free += $space;
   }
 }
 
