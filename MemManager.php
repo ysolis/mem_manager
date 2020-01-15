@@ -13,6 +13,22 @@ class MemoryManager{
     $this->size   = strlen($this->buffer);
     $this->free   = strlen($this->buffer);
   }
-}
 
+  function Alloc($size)
+  {
+    if($size <= $this->free) {
+      array_push($this->alloc, $size);
+      $this->index++;
+      $item = $this->alloc[$this->index];
+      $this->free = $this->free - $size;
+
+    } else {
+      return false;
+    }
+  }
+
+  function Free($item)
+  {}
+
+}
 ?>
