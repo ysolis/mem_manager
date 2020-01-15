@@ -28,7 +28,13 @@ class MemoryManager{
   }
 
   function Position($index)
-  {}
+  {
+    $result = 0;
+    for($i=0; $i<$index; $i++){
+      $result += $this->alloc[$i];
+    }
+    return $result;
+  }
 
   function Store($index, $data)
   {}
