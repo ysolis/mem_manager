@@ -47,23 +47,40 @@ class MemoryManager{
     }
   }
 
-  function ShowBuffer()
-  {
-    print_r("\n".$this->buffer."\n");
-    print_r(strlen($this->buffer));
-  }
-
   function Free($index)
   {
-    $space = $this->alloc[$index];
     $pos   = $this->Position($index);
+    $space = $this->alloc[$index];
+    $new_buffer = substr($this->buffer, 0, $pos).substr($this->buffer, $pos+$space).str_repeat(' ', $space);
     $this->alloc[$index] = 0;
-    for($i=$index; $i<$this->index; $i++) {
-    }
+    $this->buffer = $new_buffer;
     $this->free += $space;
   }
-}
 
+  function ShowIndex($index)
+  {
+    $pos = $this->Position($index);
+    $space = $this->alloc[$index];
+    if($space>0) {
+      print_r(substr($this->buffer, $pos, $space)."|\n");
+    }
+  }
+
+  function ShowIndexes()
+  {
+    for($i=0; $i<=$this->index; $i++)
+    {
+      $this->ShowIndex($i);
+    }
+  }
+
+  function ShowDiagnostic()
+  {
+    print_r($this->buffer."\n");
+    print_r($this->size."\n");
+    print_r($this->free."\n");
+  }
+}
 
 $memory = new MemoryManager(100);
 
@@ -71,9 +88,14 @@ $n0 = $memory->Alloc(strlen('Yonsy'));
 $memory->Store($n0, 'Yonsy');
 $n1 = $memory->Alloc(10);
 $memory->Store($n1, 'Solis');
-$n2 = $memory->Alloc(20);
+$n2 = $memory->Alloc(10);
 $memory->Store($n2, 'Ponce');
 
-$memory->ShowBuffer();
+$memory->ShowIndexes();
+
+$memory->Free($n1);
+
+$memory->ShowIndexes();
+
 
 ?>
